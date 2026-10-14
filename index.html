@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101318">
+  <title>Nightshift — Highway Racer</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="game.js" defer></script>
+</head>
+<body>
+  <main class="app">
+    <header class="header">
+      <a class="brand" href="./" aria-label="Nightshift home"><span class="brand-icon">N</span> NIGHTSHIFT<span class="edition">ARCADE / 01</span></a>
+      <span class="status"><span></span> HIGHWAY RACER</span>
+    </header>
+    <section class="layout" aria-label="Racing game">
+      <aside class="intro">
+        <p class="eyebrow">AFTER HOURS. FULL THROTTLE.</p>
+        <h1>Own the<br><em>night.</em></h1>
+        <p class="description">One road. Endless traffic.<br>Find your line and keep it clean.</p>
+        <div class="record"><span>PERSONAL BEST</span><strong id="best">00000</strong><span>POINTS</span></div>
+        <div class="instructions"><p><kbd>←</kbd> <kbd>→</kbd> Steer <span>or A / D</span></p><p><kbd>P</kbd> Pause <span>or Space</span></p></div>
+        <p class="tip">TIP / Traffic gets faster as you drive.<br>Look ahead, leave room to move.</p>
+      </aside>
+      <div class="game-column">
+        <div class="dashboard"><div><span>SCORE</span><strong id="score">00000</strong></div><div class="speed"><strong id="speed">0</strong><span>KM/H</span></div><button id="pause" aria-label="Pause game" disabled>Ⅱ</button></div>
+        <div class="stage">
+          <canvas id="game" width="420" height="680" aria-label="Racing road. Use arrow keys or the steering buttons to avoid traffic.">Your browser needs Canvas support to play.</canvas>
+          <div class="overlay" id="overlay">
+            <span class="overlay-tag" id="overlay-tag">THE ROAD IS YOURS</span>
+            <h2 id="overlay-title">Ready to roll?</h2>
+            <p id="overlay-message">Dodge traffic. Chase your best score.</p>
+            <button class="primary" id="start">Start engine <span>↗</span></button>
+            <span class="overlay-note" id="overlay-note">ARROW KEYS OR TOUCH TO STEER</span>
+          </div>
+        </div>
+        <div class="touch-controls"><button id="left" aria-label="Steer left">← <span>LEFT</span></button><p>HOLD TO STEER</p><button id="right" aria-label="Steer right"><span>RIGHT</span> →</button></div>
+        <p id="announcement" class="sr-only" aria-live="polite"></p>
+      </div>
+      <aside class="details"><span class="vertical-label">NIGHT RUN / ENDLESS MODE</span><div class="route"><span>ROUTE</span><strong>01</strong><p>THE MIDNIGHT<br>EXPRESSWAY</p><span class="route-line"></span><p>NO FINISH LINE.<br>JUST YOUR NEXT BEST.</p></div></aside>
+    </section>
+    <footer><span>BUILT FOR THE LONG WAY HOME.</span><span>HTML / CSS / JAVASCRIPT</span></footer>
+  </main>
+</body>
+</html>
