@@ -54,7 +54,7 @@ jobs:
           curl -fsS http://127.0.0.1:8090/game.js -o /dev/null
           curl -fsS http://127.0.0.1:8090/style.css -o /dev/null
 
-            - name: Show diagnostics if a check fails
+      - name: Show diagnostics if a check fails
         if: failure()
         run: |
           docker ps -a
