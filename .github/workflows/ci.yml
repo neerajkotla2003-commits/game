@@ -1,0 +1,62 @@
+name: Racing Game CI
+
+on:
+  push:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Download repository code
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js for tests
+        uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          package-manager-cache: false
+
+      - name: Check JavaScript syntax
+        run: node --check game.js
+
+      - name: Run game tests
+        run: node --test tests/game.test.cjs
+
+      - name: Build Docker image
+        run: docker build -t racing-game:ci .
+
+      - name: Start container
+        run: |
+          docker run -d \
+            --name racing-game-ci \
+            -p 127.0.0.1:8090:80 \
+            racing-game:ci
+
+      - name: Check container and game files
+        run: |
+          curl --fail --silent --show-error \
+            --retry 10 --retry-connrefused \
+            --retry-delay 1 --max-time 3 \
+            http://127.0.0.1:8090/health
+
+          curl -fsS http://127.0.0.1:8090/ -o /dev/null
+          curl -fsS http://127.0.0.1:8090/game.js -o /dev/null
+          curl -fsS http://127.0.0.1:8090/style.css -o /dev/null
+
+      - name: Show logs if a check fails
+        if: failure()
+        run: docker logs racing-game-ci
+
+      - name: Remove test container
+        if: always()
+        run: docker rm -f racing-game-ci || true
