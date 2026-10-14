@@ -62,7 +62,7 @@
   }
   function roundedRect(x,y,w,h,r,color) { ctx.fillStyle=color; ctx.beginPath(); ctx.roundRect(x,y,w,h,r); ctx.fill(); }
   function drawCar(car, isPlayer=false) {
-    const {x,y,w,h}=car, color=isPlayer?'#d2ff62':car.color;
+    const {x,y,w,h}=car, color=isPlayer?'#991b2a':car.color;
     ctx.save(); ctx.translate(x,y);
     roundedRect(-w/2+4,-h/2+6,w,h,9,'#0008');
     roundedRect(-w/2-3,-h/2+14,8,17,2,'#080b0f'); roundedRect(w/2-5,-h/2+14,8,17,2,'#080b0f');
