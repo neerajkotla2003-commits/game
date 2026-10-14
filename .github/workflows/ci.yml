@@ -45,17 +45,21 @@ jobs:
       - name: Check container and game files
         run: |
           curl --fail --silent --show-error \
-            --retry 10 --retry-connrefused \
-            --retry-delay 1 --max-time 3 \
+            --retry 15 --retry-all-errors \
+            --retry-delay 1 --retry-max-time 30 \
+            --max-time 3 \
             http://127.0.0.1:8090/health
 
           curl -fsS http://127.0.0.1:8090/ -o /dev/null
           curl -fsS http://127.0.0.1:8090/game.js -o /dev/null
           curl -fsS http://127.0.0.1:8090/style.css -o /dev/null
 
-      - name: Show logs if a check fails
+            - name: Show diagnostics if a check fails
         if: failure()
-        run: docker logs racing-game-ci
+        run: |
+          docker ps -a
+          docker logs racing-game-ci || true
+          docker inspect --format '{{json .State}}' racing-game-ci || true
 
       - name: Remove test container
         if: always()
